@@ -15,7 +15,12 @@
 ```
 $app = new MiniBlogApplication(false);
 $app->run();
+```
 
+4. 実行されるメソッドの順番
+
+Application.php
+```
 public function __construct($debug = false)
     {
         $this->setDebugMode($debug);
@@ -31,6 +36,34 @@ protected function initialize()
         $this->db_manager = new DbManager();
         $this->router = new Router($this->registerRoutes());
     }
+```
+
+```
+//Routerクラスのresolveメソッドを呼び出してルーティングパラメータを取得し、コントローラとアクション名を特定する。
+public function run()
+{
+    try {
+        $params = $this->router->resolve($this->request->getPathInfo());
+        if ($params === false) {
+            //例外処理
+            throw new HttpNotFoundException('No route found for' . $this->request->getPathInfo());
+        }
+
+        $controller = $params['controller'];
+        $action = $params['action'];
+
+        $this->runAction($controller, $action, $params);
+
+        $this->response->send();
+
+    } catch (HttpNotFoundException $e) {
+        $this->render404Page($e);
+
+    } catch (UnauthorizedActionException $e) {
+        list($controller, $action) = $this->login_action;
+        $this->runAction($controller, $action);
+    }
+}
 ```
 
 ## 1機能の作成手順
