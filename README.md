@@ -12,26 +12,26 @@
 3. web/index.phpからbootstrap.php(オートロードクラスを実装している)と[アプリ名]Application.phpを読み込む。
    コードは以下の様。
 
-    $app = new MiniBlogApplication(false);
-    $app->run();
+```
+$app = new MiniBlogApplication(false);
+$app->run();
 
+public function __construct($debug = false)
+    {
+        $this->setDebugMode($debug);
+        $this->initialize();
+        $this->configure();
+    }
 
-    public function __construct($debug = false)
-        {
-            $this->setDebugMode($debug);
-            $this->initialize();
-            $this->configure();
-        }
-
-    protected function initialize()
-        {
-            $this->request = new Request();
-            $this->response = new Response();
-            $this->session = new Session();
-            $this->db_manager = new DbManager();
-            $this->router = new Router($this->registerRoutes());
-        }
-
+protected function initialize()
+    {
+        $this->request = new Request();
+        $this->response = new Response();
+        $this->session = new Session();
+        $this->db_manager = new DbManager();
+        $this->router = new Router($this->registerRoutes());
+    }
+```
 
 ## 1機能の作成手順
 
