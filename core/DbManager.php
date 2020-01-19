@@ -16,14 +16,14 @@ class DbManager {
             'options' => array(),
         ), $params);
 
-        $con = new PDO(
+        $con = new \PDO(
             $params['dsn'],
             $params['user'],
             $params['password'],
             $params['options']
         );
 
-        $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $con->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 
         $this->connections[$name] = $con;
     }
