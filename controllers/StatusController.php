@@ -32,7 +32,7 @@ class StatusController extends Controller
         if (!strlen($body)) {
             $errors[] = "ひとことを入力してください。";
         } else if (mb_strlen($body) > 200) {
-            $errors[] = "ひところは200文字以内で入力してください。";
+            $errors[] = "ひとことは200文字以内で入力してください。";
         }
 
         if (count($errors) === 0) {
