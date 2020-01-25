@@ -2,6 +2,7 @@
 
 class AccountController extends Controller
 {
+    
     public function signupAction()
     {
         if ($this->session->isAuthenticated()) {
@@ -137,5 +138,13 @@ class AccountController extends Controller
             'errors' => $errors,
             '_token' => $this->generateCsrfToken('account/signin'),
         ), 'signin');
+    }
+
+    public function signoutAction()
+    {
+        $this->session->clear();
+        $this->session->setAuthenticated(false);
+
+        return $this->redirect('account/signin');
     }
 }
